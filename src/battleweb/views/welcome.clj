@@ -17,8 +17,8 @@
       [:h1 "Todo list!"]
       (common/todos-list items))))
 
-(defpage "/realm" {}
-  (let [realms (bnc/realm-get-info "eu" "aegwynn")]
+(defpage "/realm/:region/:name" {:keys [region name]}
+  (let [realms (bnc/realm-get-info region name)]
     (common/layout
       [:h1 "Realms!"]
       (common/realms-list realms))))

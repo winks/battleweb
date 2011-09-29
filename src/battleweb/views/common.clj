@@ -31,10 +31,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defpartial realm-item
-  [{:keys [name status slug]}]
-  [:li {:id slug}
-   [:h3 name]
-   [:span.status status]])
+  [{:keys [name status slug type queue population battlegroup]}]
+  [:li {:id slug, :class (if (= true status) "online" "offline")}
+   [:h3 (str name " (" battlegroup ") [" type "]")]
+   [:span.pop (str "Pop: " population " (" (if (= false queue) "No ") "Queue)")]
+  ])
+
 
 (defpartial realms-list
   [realms]
