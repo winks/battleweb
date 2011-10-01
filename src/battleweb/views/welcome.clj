@@ -8,19 +8,18 @@
 
 (defpage "/" []
          (common/layout
-           [:h1 (str "Welcome to ") [:a {:href "https://github.com/winks/battleweb"} "battleweb"]]
-           [:p "Some example pages:"]
+           [:h1 "Welcome to " (link-to "https://github.com/winks/battleweb" "battleweb")]
+           [:p "Some example pages, feel free to play around with urls:"]
            [:ul
-            [:li [:a {:href "/realm/eu/malygos"}
-                  "/realm/eu/malygos"] " - Realm info for EU-Malygos"]
-            [:li [:a {:href "/realm/eu"}
-                  "/realm/eu"] " - All EU realms"]
-            [:li [:a {:href "/realm/us"}
-                  "/realm/us"] " - All US realms"]
-            [:li [:a {:href "/guild/us/ysondre/exodus"}
-                  "/guild/us/ysondre/exodus"] " - Guild info for Exodus on US-Ysondre"]
-            [:li [:a {:href "/item/62383"}
-                  "/item/62383"] " - Item info for 'Wrap of the Great Turtle'"]]))
+            [:li (link-to "/realm/eu/malygos" "/realm/eu/malygos") " - Realm info for EU-Malygos"]
+            [:li (link-to "/realm/eu" "/realm/eu") " - All EU realms"]
+            [:li (link-to "/realm/us" "/realm/us") " - All US realms"]
+            [:li
+             (link-to "/guild/us/ysondre/exodus" "/guild/us/ysondre/exodus") 
+             " - Guild info for Exodus on US-Ysondre"]
+            [:li
+             (link-to "/item/62383" "/item/62383")
+             " - Item info for 'Wrap of the Great Turtle'"]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
   (let [realms (bnc/realm-get-info region name)]

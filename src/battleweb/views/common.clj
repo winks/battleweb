@@ -17,11 +17,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn slugify
+  [string]
+  (.replace string " " "+"))
+
 (defpartial realm-item-full
   [{:keys [name status slug type queue population battlegroup]}]
   [:li {:id slug, :class (if (= true status) "online" "offline")}
-   [:h3 (str name " (" battlegroup ") [" type "]")]
-   [:span.pop (str "Pop: " population " (" (if (= false queue) "No ") "Queue)")]])
+   [:h3 name " (" battlegroup ") [" type "]"]
+   [:span.pop "Pop: " population " (" (if (= false queue) "No ") "Queue)"]])
 
 (defpartial realms-list-full
   [realms]
@@ -30,16 +34,16 @@
 
 (defpartial realm-item-basic
   [region realm]
-  [:li [:a {:href
-          (str "/realm/" region "/" realm )}
-      realm]])
+  [:li (link-to
+         (str "/realm/" region "/" (slugify realm))
+         realm)])
 
 (defpartial realms-list-basic
   [region realms]
   [:ul#realmItemsBasic
-   (let [num (count realms)]
-     (let [regions (take num (cycle [region]))]
-       (map realm-item-basic regions realms)))])
+   (let [num (count realms)
+         regions (take num (cycle [region]))]
+       (map realm-item-basic regions realms))])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -49,12 +53,12 @@
    [:div.inner
     [:div.level level]
     [:h3 {:class (.toLowerCase (nth bnd/bn-factions side))}
-     (str name " (" (.toUpperCase region) "-" realm ")")]
-    [:span.points (str achievementPoints " Achievement Points")]
+     name " (" (.toUpperCase region) "-" realm ")"]
+    [:span.points achievementPoints " Achievement Points"]
     [:div.item-footer
-     [:a {:href
-          (str "http://" region ".battle.net/wow/guild/" realm "/" name "/")}
-      "Armory"]]]])
+     (link-to
+       (str "http://" region ".battle.net/wow/guild/" realm "/" name "/")
+       "Armory")]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -68,15 +72,14 @@
            :alt "Shiny!",
            :title "Shiny!"}]]
    [:div.inner
-    [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))}
-     (str name)]
+    [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))} name]
     [:span (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")] [:br]
-    [:span (if (integer? inventoryType) (nth bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
+    [:span (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
     [:span (if (integer? baseArmor) (str baseArmor " Armor"))] [:br]
     [:span (str "Requires Level " requiredLevel)] [:br]
-    [:span (str "Item Level " itemLevel)] [:br]
+    [:span "Item Level " itemLevel] [:br]
     [:span.item-description description]
-    [:span (str "Sell Price: " (bnt/copper-to-gold sellPrice))] [:br]
+    [:span "Sell Price: " (bnt/copper-to-gold sellPrice)] [:br]
     [:div.item-footer
-     [:a {:href (str "http://" region ".battle.net/wow/en/item/" id)} "Armory"] " "
-     [:a {:href (str "http://www.wowhead.com/item=" id)} "Wowhead"]]]])
+     (link-to (str "http://" region ".battle.net/wow/en/item/" id) "Armory") " "
+     (link-to (str "http://www.wowhead.com/item=" id) "Wowhead")]]])
