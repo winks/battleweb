@@ -15,35 +15,31 @@
                [:div#wrapper
                 content]]))
 
-(defpartial todo-item
-  [{:keys [id title due]}]
-  [:li {:id id}
-   [:h3 title]
-   [:span.due due]])
-
-(defpartial todos-list
-  [items]
-  [:ul#todoItems
-   (map todo-item items)])
-  
-(def all-todos
-  [{:id "todo1"
-    :title "Get Milk"
-    :due "today"}])
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defpartial realm-item
+(defpartial realm-item-full
   [{:keys [name status slug type queue population battlegroup]}]
   [:li {:id slug, :class (if (= true status) "online" "offline")}
    [:h3 (str name " (" battlegroup ") [" type "]")]
    [:span.pop (str "Pop: " population " (" (if (= false queue) "No ") "Queue)")]])
 
-
-(defpartial realms-list
+(defpartial realms-list-full
   [realms]
   [:ul#realmItems
-   (map realm-item realms)])
+   (map realm-item-full realms)])
+
+(defpartial realm-item-basic
+  [region realm]
+  [:li [:a {:href
+          (str "/realm/" region "/" realm )}
+      realm]])
+
+(defpartial realms-list-basic
+  [region realms]
+  [:ul#realmItemsBasic
+   (let [num (count realms)]
+     (let [regions (take num (cycle [region]))]
+       (map realm-item-basic regions realms)))])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -54,7 +50,11 @@
     [:div.level level]
     [:h3 {:class (.toLowerCase (nth bnd/bn-factions side))}
      (str name " (" (.toUpperCase region) "-" realm ")")]
-    [:span.points (str achievementPoints " Achievement Points")]]])
+    [:span.points (str achievementPoints " Achievement Points")]
+    [:div.item-footer
+     [:a {:href
+          (str "http://" region ".battle.net/wow/guild/" realm "/" name "/")}
+      "Armory"]]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -63,7 +63,10 @@
                   itemBind itemClass baseArmor itemLevel inventoryType
                   sellPrice bonusStats icon]}]
   [:div#item
-   [:div {:class "icon"} [:img {:src (bnt/media-url-icon region "wow" "large" icon)}]]
+   [:div {:class "icon"}
+    [:img {:src (bnt/media-url-icon region "wow" "large" icon),
+           :alt "Shiny!",
+           :title "Shiny!"}]]
    [:div.inner
     [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))}
      (str name)]
@@ -73,10 +76,7 @@
     [:span (str "Requires Level " requiredLevel)] [:br]
     [:span (str "Item Level " itemLevel)] [:br]
     [:span.item-description description]
-    [:span (str "Sell Price: "
-                (quot sellPrice 10000) " G " 
-                (str (quot (- sellPrice (* 10000 (quot sellPrice 10000))) 100) " S ")
-                (mod sellPrice 1000) " C")] [:br]
+    [:span (str "Sell Price: " (bnt/copper-to-gold sellPrice))] [:br]
     [:div.item-footer
      [:a {:href (str "http://" region ".battle.net/wow/en/item/" id)} "Armory"] " "
-    [:a {:href (str "http://www.wowhead.com/item=" id)} "Wowhead"]]]])
+     [:a {:href (str "http://www.wowhead.com/item=" id)} "Wowhead"]]]])

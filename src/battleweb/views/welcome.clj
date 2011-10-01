@@ -1,28 +1,38 @@
 (ns battleweb.views.welcome
   (:require [battleweb.views.common :as common]
-            [noir.content.pages :as pages]
             [battlenet.core :as bnc]
             [battlenet.network :as bnn])
   (:use noir.core
         hiccup.core
         hiccup.page-helpers))
 
-(defpage "/welcome" []
+(defpage "/" []
          (common/layout
-           [:h1 "Welcome"]
-           [:p "Welcome to battleweb"]))
-
-(defpage "/todos" {}
-  (let [items common/all-todos]
-    (common/layout
-      [:h1 "Todo list!"]
-      (common/todos-list items))))
+           [:h1 (str "Welcome to ") [:a {:href "https://github.com/winks/battleweb"} "battleweb"]]
+           [:p "Some example pages:"]
+           [:ul
+            [:li [:a {:href "/realm/eu/malygos"}
+                  "/realm/eu/malygos"] " - Realm info for EU-Malygos"]
+            [:li [:a {:href "/realm/eu"}
+                  "/realm/eu"] " - All EU realms"]
+            [:li [:a {:href "/realm/us"}
+                  "/realm/us"] " - All US realms"]
+            [:li [:a {:href "/guild/us/ysondre/exodus"}
+                  "/guild/us/ysondre/exodus"] " - Guild info for Exodus on US-Ysondre"]
+            [:li [:a {:href "/item/62383"}
+                  "/item/62383"] " - Item info for 'Wrap of the Great Turtle'"]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
   (let [realms (bnc/realm-get-info region name)]
     (common/layout
       [:h1 "Realms!"]
-      (common/realms-list realms))))
+      (common/realms-list-full realms))))
+
+(defpage "/realm/:region" {:keys [region]}
+  (let [realms (bnc/get-realm-names region)]
+    (common/layout
+       [:h1 "Realms!"]
+       (common/realms-list-basic region realms))))
 
 (defpage "/guild/:region/:realm/:name" {:keys [region realm name]}
   (let [guild (bnn/read-remote-guild region realm name)]

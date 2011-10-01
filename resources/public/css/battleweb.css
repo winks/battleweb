@@ -1,6 +1,40 @@
 body {
   font-family: "Trebuchet MS","Verdana","Arial";
 }
+
+#wrapper {
+  margin: 10px;
+}
+
+#item {
+  background-color: #333333;
+  color: #dddddd;
+  width: 250px;
+  margin: 10px;
+  border: 1px solid #000;
+}
+
+#item a, #guild a {
+  color: #ffffff;
+}
+
+#guild {
+  background-color: #333333;
+  color: #dddddd;
+  width: 250px;
+  margin: 10px;
+  border: 1px solid #000;
+}
+
+#realmItems {
+  width: 250px;
+  margin: 10px;
+}
+
+#realmItems li {
+  padding: 5px;
+}
+
 .legendary { color: #ff8000; }
 .epic { color: #a335ee; }
 .rare { color: #0070ff; }
@@ -13,18 +47,8 @@ body {
   text-align: right;
 }
 
-#item {
-  background-color: #333333;
-  color: #dddddd;
-  width: 250px;
-  margin: 10px;
-}
 div.inner {
   margin: 5px;
-}
-
-#item a {
-  color: #ffffff;
 }
 
 .horde {
@@ -36,13 +60,9 @@ div.inner {
 
 .alliance {
   background-color: #235;
-}
-
-#guild {
-  background-color: #333333;
-  color: #dddddd;
-  width: 250px;
-  margin: 10px;
+  margin-left: -5px;
+  margin-right: -5px;
+  padding: 3px;
 }
 
 .icon {
@@ -53,4 +73,11 @@ div.inner {
 .level {
   float: right;
   padding: 3px;
+}
+
+.online {
+  background-color: #39e639;
+}
+.offline {
+  background-color: #ff4040;
 }
