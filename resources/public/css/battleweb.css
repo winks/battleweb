@@ -1,3 +1,6 @@
+body {
+  font-family: "Trebuchet MS","Verdana","Arial";
+}
 .legendary { color: #ff8000; }
 .epic { color: #a335ee; }
 .rare { color: #0070ff; }
@@ -13,7 +16,11 @@
 #item {
   background-color: #333333;
   color: #dddddd;
-  width: 220px;
+  width: 250px;
+  margin: 10px;
+}
+div.inner {
+  margin: 5px;
 }
 
 #item a {
@@ -22,6 +29,9 @@
 
 .horde {
   background-color: #833;
+  margin-left: -5px;
+  margin-right: -5px;
+  padding: 3px;
 }
 
 .alliance {
@@ -31,9 +41,16 @@
 #guild {
   background-color: #333333;
   color: #dddddd;
-  width: 220px;
+  width: 250px;
+  margin: 10px;
 }
 
 .icon {
   float: right;
+  margin: 10px:
+}
+
+.level {
+  float: right;
+  padding: 3px;
 }

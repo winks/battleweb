@@ -50,11 +50,11 @@
 (defpartial guild-info
   [region {:keys [name realm level side achievementPoints emblem lastModified]}]
   [:div#guild
-   [:h3 {:class (.toLowerCase (nth bnd/bn-factions side))}
-    (str name " (" (.toUpperCase region) "-" realm ")")]
-   [:span.level level]
-   [:br]
-   [:span.points (str achievementPoints)]])
+   [:div.inner
+    [:div.level level]
+    [:h3 {:class (.toLowerCase (nth bnd/bn-factions side))}
+     (str name " (" (.toUpperCase region) "-" realm ")")]
+    [:span.points (str achievementPoints " Achievement Points")]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -63,19 +63,20 @@
                   itemBind itemClass baseArmor itemLevel inventoryType
                   sellPrice bonusStats icon]}]
   [:div#item
-   [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))}
-    (str name)]
    [:div {:class "icon"} [:img {:src (bnt/media-url-icon region "wow" "large" icon)}]]
-   [:span (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")] [:br]
-   [:span (if (integer? inventoryType) (nth bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
-   [:span (if (integer? baseArmor) (str baseArmor " Armor"))] [:br]
-   [:span (str "Requires Level " requiredLevel)] [:br]
-   [:span (str "Item Level " itemLevel)] [:br]
-   [:span.item-description description]
-   [:span (str "Sell Price: "
-               (quot sellPrice 10000) " G " 
-               (str (quot (- sellPrice (* 10000 (quot sellPrice 10000))) 100) " S ")
-               (mod sellPrice 1000) " C")] [:br]
-   [:span.item-footer
-    [:a {:href (str "http://" region ".battle.net/wow/en/item/" id)} "Armory"] " "
-    [:a {:href (str "http://www.wowhead.com/item=" id)} "Wowhead"]]])
+   [:div.inner
+    [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))}
+     (str name)]
+    [:span (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")] [:br]
+    [:span (if (integer? inventoryType) (nth bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
+    [:span (if (integer? baseArmor) (str baseArmor " Armor"))] [:br]
+    [:span (str "Requires Level " requiredLevel)] [:br]
+    [:span (str "Item Level " itemLevel)] [:br]
+    [:span.item-description description]
+    [:span (str "Sell Price: "
+                (quot sellPrice 10000) " G " 
+                (str (quot (- sellPrice (* 10000 (quot sellPrice 10000))) 100) " S ")
+                (mod sellPrice 1000) " C")] [:br]
+    [:div.item-footer
+     [:a {:href (str "http://" region ".battle.net/wow/en/item/" id)} "Armory"] " "
+    [:a {:href (str "http://www.wowhead.com/item=" id)} "Wowhead"]]]])
