@@ -1,6 +1,6 @@
 # battleweb
 
-A website written in noir. 
+A frontend to [battlenet](https://github.com/winks/battlenet) written in [noir](http://webnoir.org). 
 
 ## Usage
 
@@ -8,10 +8,3 @@ A website written in noir.
 lein deps
 lein run
 ```
-
-## License
-
-Copyright (C) 2011 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.
-
