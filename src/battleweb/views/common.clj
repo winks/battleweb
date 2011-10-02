@@ -18,15 +18,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defpartial realm-item-full
-  [{:keys [name status slug type queue population battlegroup]}]
-  [:li {:id slug, :class (if (= true status) "online" "offline")}
-   [:h3 name " (" battlegroup ") [" type "]"]
-   [:span.pop "Pop: " population " (" (if (= false queue) "No " "Has ") "Queue)"]])
+  [region {:keys [name status slug type queue population battlegroup]}]
+  [:li {:id (str region "-" slug), :class (if (= true status) "online" "offline")}
+   [:span.realmtype  "[" type "] "]
+   [:span (link-to (str "/realm/" region "/" slug) name) " (" battlegroup ")"]
+   [:span.pop population " pop (" (if (= false queue) "No " "Has ") "Queue)"]])
 
 (defpartial realms-list-full
-  [realms]
+  [region realms]
   [:ul#realmItems
-   (map realm-item-full realms)])
+   (let [num (count realms)
+         regions (take num (cycle [region]))]
+     (map realm-item-full regions realms))])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

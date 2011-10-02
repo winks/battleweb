@@ -29,10 +29,10 @@
        " - Item info for 'Wrap of the Great Turtle'"]]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
-  (bw-page "Realms!" (common/realms-list-full (realm/get-realm region name))))
+  (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region name))))
 
 (defpage "/realm/:region" {:keys [region]}
-  (bw-page "Realms!" (common/realms-list-full (realm/get-realm region))))
+  (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region))))
 
 (defpage "/guild/:region/:realm/:name" {:keys [region realm name]}
   (bw-page "Guilds!" (common/guild-info "eu" (guild/get-guild  region realm name))))

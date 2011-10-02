@@ -27,12 +27,14 @@ body {
 }
 
 #realmItems {
-  width: 250px;
+  width: 500px;
   margin: 10px;
 }
 
 #realmItems li {
   padding: 5px;
+  list-style: none;
+  font-size: small;
 }
 
 .legendary { color: #ff8000; }
@@ -73,6 +75,9 @@ div.inner {
 .level {
   float: right;
   padding: 3px;
+}
+.pop {
+  float:right;
 }
 
 .online {
