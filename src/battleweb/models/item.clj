@@ -1,5 +1,6 @@
 (ns battleweb.models.item
-  (:require [battlenet.network :as bnn]))
+  (:require [battlenet.core :as bnc]
+            [battlenet.network :as bnn]))
 
 (defn get-item
   [region id]

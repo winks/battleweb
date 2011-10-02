@@ -17,33 +17,16 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn slugify
-  [string]
-  (.replace string " " "+"))
-
 (defpartial realm-item-full
   [{:keys [name status slug type queue population battlegroup]}]
   [:li {:id slug, :class (if (= true status) "online" "offline")}
    [:h3 name " (" battlegroup ") [" type "]"]
-   [:span.pop "Pop: " population " (" (if (= false queue) "No ") "Queue)"]])
+   [:span.pop "Pop: " population " (" (if (= false queue) "No " "Has ") "Queue)"]])
 
 (defpartial realms-list-full
   [realms]
   [:ul#realmItems
    (map realm-item-full realms)])
-
-(defpartial realm-item-basic
-  [region realm]
-  [:li (link-to
-         (str "/realm/" region "/" (slugify realm))
-         realm)])
-
-(defpartial realms-list-basic
-  [region realms]
-  (let [num (count realms)
-        regions (take num (cycle [region]))]
-    [:ul#realmItemsBasic
-     (map realm-item-basic regions realms)]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
