@@ -40,10 +40,10 @@
 
 (defpartial realms-list-basic
   [region realms]
-  [:ul#realmItemsBasic
-   (let [num (count realms)
-         regions (take num (cycle [region]))]
-       (map realm-item-basic regions realms))])
+  (let [num (count realms)
+        regions (take num (cycle [region]))]
+    [:ul#realmItemsBasic
+     (map realm-item-basic regions realms)]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -52,7 +52,7 @@
   [:div#guild
    [:div.inner
     [:div.level level]
-    [:h3 {:class (.toLowerCase (nth bnd/bn-factions side))}
+    [:h3 {:class (.toLowerCase (get bnd/bn-factions side))}
      name " (" (.toUpperCase region) "-" realm ")"]
     [:span.points achievementPoints " Achievement Points"]
     [:div.item-footer
@@ -72,7 +72,7 @@
            :alt "Shiny!",
            :title "Shiny!"}]]
    [:div.inner
-    [:h3 {:class (.toLowerCase (nth bnd/bn-quality quality))} name]
+    [:h3 {:class (.toLowerCase (get bnd/bn-quality quality))} name]
     [:span (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")] [:br]
     [:span (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
     [:span (if (integer? baseArmor) (str baseArmor " Armor"))] [:br]
