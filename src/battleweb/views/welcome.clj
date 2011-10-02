@@ -1,10 +1,17 @@
 (ns battleweb.views.welcome
   (:require [battleweb.views.common :as common]
             [battlenet.core :as bnc]
-            [battlenet.network :as bnn])
+            [battlenet.network :as bnn]
+            [battleweb.models.item :as item])
   (:use noir.core
         hiccup.core
         hiccup.page-helpers))
+
+(defpartial bw-page
+  [headline content]
+  (common/layout
+    [:h1 headline]
+    content))
 
 (defpage "/" []
          (common/layout
@@ -40,7 +47,4 @@
       (common/guild-info region guild))))
 
 (defpage "/item/:id" {:keys [id]}
-  (let [item (bnn/read-remote-item "eu" id)]
-    (common/layout
-      [:h1 "Items!"]
-      (common/item-info "eu" item))))
+  (bw-page "Items!" (common/item-info "eu" (item/get-item  "eu" id))))
