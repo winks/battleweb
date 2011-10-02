@@ -1,4 +1,4 @@
-(ns battleweb.views.welcome
+(ns battleweb.views.main
   (:require [battleweb.views.common :as common]
             [battlenet.core :as bnc]
             [battlenet.network :as bnn]
