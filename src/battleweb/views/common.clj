@@ -57,15 +57,15 @@
     [:img {:src (bnt/media-url-icon region "wow" "large" icon),
            :alt "Shiny!",
            :title "Shiny!"}]]
-   [:div.inner
-    [:h3 {:class (.toLowerCase (get bnd/bn-quality quality))} name]
-    [:span (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")] [:br]
-    [:span (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")] [:br]
-    [:span (if (integer? baseArmor) (str baseArmor " Armor"))] [:br]
-    [:span (str "Requires Level " requiredLevel)] [:br]
-    [:span "Item Level " itemLevel] [:br]
-    [:span.item-description description]
-    [:span "Sell Price: " (bnt/copper-to-gold sellPrice)] [:br]
-    [:div.item-footer
+   [:ul.inner
+    [:li {:class (.toLowerCase (get bnd/bn-quality quality))} name]
+    [:li (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")]
+    [:li (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")]
+    [:li (if (integer? baseArmor) (str baseArmor " Armor"))]
+    [:li (str "Requires Level " requiredLevel)]
+    [:li "Item Level " itemLevel]
+    [:li.item-description description]
+    [:li "Sell Price: " (bnt/copper-to-gold sellPrice)]
+    [:li.item-footer
      (link-to (str "http://" region ".battle.net/wow/en/item/" id) "Armory") " "
      (link-to (str "http://www.wowhead.com/item=" id) "Wowhead")]]])

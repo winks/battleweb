@@ -14,6 +14,10 @@ body {
   border: 1px solid #000;
 }
 
+#item li {
+  list-style: none;
+}
+
 #item a, #guild a {
   color: #ffffff;
 }
@@ -49,7 +53,7 @@ body {
   text-align: right;
 }
 
-div.inner {
+.inner {
   margin: 5px;
 }
 
