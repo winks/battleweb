@@ -1,5 +1,6 @@
 (ns battleweb.views.common
-  (:require [battlenet.defs :as bnd]
+  (:require [clojure.string :as string]
+            [battlenet.defs :as bnd]
             [battlenet.tools :as bnt])
   (:use noir.core
         hiccup.core
@@ -58,14 +59,38 @@
            :alt "Shiny!",
            :title "Shiny!"}]]
    [:ul.inner
-    [:li {:class (.toLowerCase (get bnd/bn-quality quality))} name]
+    [:li {:class (str "item-name " (.toLowerCase (get bnd/bn-quality quality)))} name]
     [:li (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")]
     [:li (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")]
     [:li (if (integer? baseArmor) (str baseArmor " Armor"))]
+    (item-stats-base bonusStats)
     [:li (str "Requires Level " requiredLevel)]
     [:li "Item Level " itemLevel]
     [:li.item-description description]
+    (item-stats-extended bonusStats)
     [:li "Sell Price: " (bnt/copper-to-gold sellPrice)]
     [:li.item-footer
      (link-to (str "http://" region ".battle.net/wow/en/item/" id) "Armory") " "
      (link-to (str "http://www.wowhead.com/item=" id) "Wowhead")]]])
+
+(defpartial item-stats-base
+  [stats]
+  (for [statMap stats]
+    (if (<= (:stat statMap) 7)
+      [:li
+       (if (< (:amount statMap) 0) "-" "+")
+       (:amount statMap)
+       " "
+       (get bnd/bn-stats (:stat statMap))])))
+
+(defpartial item-stats-extended
+  [stats]
+  (for [statMap stats]
+    (if (> (:stat statMap) 7)
+      [:li.item-bonus
+       (str
+         "Equip: Increases your "
+         (-> (string/lower-case (get bnd/bn-stats (:stat statMap))))
+         " rating by "
+         (:amount statMap)
+         ".")])))

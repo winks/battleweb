@@ -9,13 +9,14 @@ body {
 #item {
   background-color: #333333;
   color: #dddddd;
-  width: 250px;
+  width: 300px;
   margin: 10px;
   border: 1px solid #000;
 }
 
 #item li {
   list-style: none;
+  font-size: small;
 }
 
 #item a, #guild a {
@@ -83,10 +84,56 @@ body {
 .pop {
   float:right;
 }
-
+.item-bonus {
+  color: #00ee00;
+}
 .online {
   background-color: #39e639;
 }
 .offline {
   background-color: #ff4040;
+}
+
+.class-warrior {
+  color: #c79c6e";
+}
+.class-paladin {
+  color: #f58cba";
+}
+.class-hunter {
+  color: #abd473";
+}
+.class-rogue {
+  color: #fff569";
+}
+.class-priest {
+  color: #fff";
+}
+.class-deathknight {
+  color: #c41f3b";
+}
+.class-shaman {
+  color: #0070de";
+}
+.class-mage {
+  color: #69ccf0";
+}
+.class-warlock {
+  color: #9482c9";
+}
+.class-druid {
+  color: #ff7d0a";
+}
+
+.icon-gold {
+  padding-right: 15px;
+  background: url("/img/gold.gif") right center no-repeat;
+}
+.icon-silver {
+  padding-right: 15px;
+  background: url("/img/silver.gif") right center no-repeat;
+}
+.icon-copper {
+  padding-right: 15px;
+  background: url("/img/copper.gif") right center no-repeat;
 }
