@@ -42,7 +42,10 @@
   (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region))))
 
 (defpage "/guild/:region/:realm/:name" {:keys [region realm name]}
-  (bw-page "Guilds!" (common/guild-info "eu" (guild/get-guild region realm name))))
+  (let [input (guild/get-guild region realm name)]
+    (bw-page
+      "Guilds!"
+      (valid-char? input region common/guild-info common/has-error))))
 
 (defpage "/item/:id" {:keys [id]}
   (bw-page "Items!" (common/item-info "eu" (item/get-item  "eu" id))))

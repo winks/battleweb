@@ -5,4 +5,7 @@
 
 (defn get-guild
   [region realm name]
-  (bnn/read-remote-guild region realm name))
+  (let [sname (slugify-name name)]
+    (do
+      (bwlog "debug" sname)
+    (bnn/read-remote-guild region realm sname))))

@@ -1,6 +1,5 @@
 (ns battleweb.views.common
   (:require [clojure.string :as string]
-            [battlenet.defs :as bnd]
             [battlenet.tools :as bnt])
   (:use noir.core
         hiccup.core
@@ -45,7 +44,7 @@
   [:div#guild
    [:div.inner
     [:div.level level]
-    [:h3 {:class (.toLowerCase (get bnd/bn-factions side))}
+    [:h3 {:class (.toLowerCase (bnt/lookup-faction side))}
      name " (" (.toUpperCase region) "-" realm ")"]
     [:span.points achievementPoints " Achievement Points"]
     [:div.item-footer
@@ -62,7 +61,7 @@
        (if (< (:amount statMap) 0) "-" "+")
        (:amount statMap)
        " "
-       (get bnd/bn-stats (:stat statMap))])))
+       (bnt/lookup-stat (:stat statMap))])))
 
 (defpartial item-stats-extended
 ;  "Displays stats: HIT/CRI/MST/EXP/etc"
@@ -72,7 +71,7 @@
       [:li.item-bonus
        (str
          "Equip: Increases your "
-         (-> (string/lower-case (get bnd/bn-stats (:stat statMap))))
+         (-> (string/lower-case (bnt/lookup-stat (:stat statMap))))
          " rating by "
          (:amount statMap)
          ".")])))
@@ -88,9 +87,9 @@
            :alt "Shiny!",
            :title "Shiny!"}]]
    [:ul.inner
-    [:li {:class (str "item-name " (.toLowerCase (get bnd/bn-quality quality)))} name]
+    [:li {:class (str "item-name " (.toLowerCase (bnt/lookup-quality quality)))} name]
     [:li (if (= 1 itemBind) "Binds when picked up" "Binds when equipped")]
-    [:li (if (integer? inventoryType) (get bnd/bn-inventory (+ -1 inventoryType)) "")]
+    [:li (if (integer? inventoryType) (bnt/lookup-inventory (+ -1 inventoryType)) "")]
     [:li (if (integer? baseArmor) (str baseArmor " Armor"))]
     (item-stats-base bonusStats)
     [:li (str "Requires Level " requiredLevel)]
@@ -124,7 +123,7 @@
     [:div#character
      [:div.icon (image (bnt/media-url-avatar region thumbnail))]
      [:ul.inner
-      [:li {:class (str "class-" (-> (string/lower-case (get bnd/bn-classes class))))}
+      [:li {:class (str "class-" (-> (string/lower-case (bnt/lookup-class class))))}
        (->
          (bnt/get-title character)
          (string/replace "%s" name))
@@ -132,7 +131,7 @@
        "&lt;"
        (link-to (str "/guild/" region "/" realm "/" (:name guild)) (:name guild))
        "&gt;"]
-      [:li level " " (get bnd/bn-races race) " " (get bnd/bn-classes class)]
+      [:li level " " (bnt/lookup-race race) " " (bnt/lookup-class class)]
       [:li (-> (string/upper-case region)) "-" realm ", " achievementPoints " Points"]
       (if (not (string/blank? (first primary-a)))
         [:li (first primary-a) " " (nth primary-a 1)])
@@ -145,7 +144,7 @@
 (defpartial char-td
   [char-class char-content]
   [:td
-   {:class (str "cls-3d-" (string/lower-case (slugify-icon (get bnd/bn-classes char-class))))}
+   {:class (str "cls-3d-" (string/lower-case (slugify-icon (bnt/lookup-class char-class))))}
    char-content])
 
 (defpartial char-tr
@@ -170,9 +169,9 @@
         title (bnt/get-title character)]
     [:tr
      (char-td class (str
-                      (iconify-race (get bnd/bn-races race) (get bnd/bn-gender gender))
+                      (iconify-race (bnt/lookup-race race) (bnt/lookup-gender gender))
                       ""
-                      (iconify-class (get bnd/bn-classes class))))
+                      (iconify-class (bnt/lookup-class class))))
      (char-td class (string/replace title "%s" (link-char region realm name name)))
      (char-td class level)
      (char-td class (str "&lt;" (link-guild region (slugify-realm realm) (:name guild) (:name guild)) "&gt;"))
@@ -190,6 +189,7 @@
 
 (defpartial char-table
   [characters]
+  [:div {:align "center"}
   [:table#char-table
    [:thead
     [:th.cls-3d {:colspan 3} "Character"]
@@ -200,4 +200,4 @@
     [:th.cls-3d {:colspan 1} (iconify-prof "Fishing")]
     [:th.cls-3d {:colspan 1} "AchP"]
     [:th.cls-3d {:colspan 1} "Links"]]
-   (map char-tr characters)])
+   (map char-tr characters)]])

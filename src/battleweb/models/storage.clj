@@ -1,8 +1,8 @@
 (ns battleweb.models.storage
   (:require [clojure.string :as string]
             [clojure.java.jdbc :as sql])
-  (:use [clojure.data.json :only (json-str write-json read-json)])
-  (:use battleweb.helper))
+  (:use [clojure.data.json :only (json-str write-json read-json)]
+        battleweb.helper))
 
 (let [db-protocol "file"
         db-host "/d:/battleweb"

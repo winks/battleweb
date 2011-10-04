@@ -20,6 +20,12 @@
     (string/replace " " "-")
     (string/lower-case)))
 
+(defn slugify-name
+  [name]
+  (->
+    name
+    (string/replace " " "%20")))
+
 (defpartial iconify-prof
   [prof]
   [:span
@@ -73,15 +79,13 @@
 (defpartial link-guild-a
   [region realm name text]
   (link-to
-       (str
-         "http://"
-         region
-         ".battle.net/wow/guild/"
-         (slugify-realm realm)
-         "/"
-         (string/replace name " " "%20")
-         "/")
-       text))
+    (->
+      "http://{region}.battle.net/wow/guild/{realm}/{name}/"
+      (string/replace "{region}" region)
+      (string/replace "{realm}" (slugify-realm realm))
+      (string/replace "{name}" name)
+      (string/replace " " "_"))
+    text))
 
 (defpartial link-char-a
   [region realm name text]
