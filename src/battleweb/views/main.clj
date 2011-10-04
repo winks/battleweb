@@ -1,5 +1,6 @@
 (ns battleweb.views.main
   (:require [battleweb.views.common :as common]
+            [battleweb.models.character :as character]
             [battleweb.models.guild :as guild]
             [battleweb.models.item :as item]
             [battleweb.models.realm :as realm])
@@ -26,7 +27,10 @@
        " - Guild info for Exodus on US-Ysondre"]
       [:li
        (link-to "/item/62383" "/item/62383")
-       " - Item info for 'Wrap of the Great Turtle'"]]]))
+       " - Item info for 'Wrap of the Great Turtle'"]
+      [:li
+       (link-to "/character/us/ysondre/kripparrian" "/character/us/ysondre/kripparrian")
+       " - Character info for Kripparrian on US-Ysondre"]]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
   (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region name))))
@@ -35,7 +39,17 @@
   (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region))))
 
 (defpage "/guild/:region/:realm/:name" {:keys [region realm name]}
-  (bw-page "Guilds!" (common/guild-info "eu" (guild/get-guild  region realm name))))
+  (bw-page "Guilds!" (common/guild-info "eu" (guild/get-guild region realm name))))
 
 (defpage "/item/:id" {:keys [id]}
   (bw-page "Items!" (common/item-info "eu" (item/get-item  "eu" id))))
+
+(defpage "/character/:region/:realm/:name" {:keys [region realm name]}
+  (bw-page
+    "Characters!"
+    (common/character-info
+      region
+      (character/get-character region realm name))))
+
+(defpage "/list/:name" {:keys [listname]}
+  (bw-page "Lists!" (common/char-table "eu" (character/get-character-list listname))))

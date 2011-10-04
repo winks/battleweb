@@ -31,6 +31,11 @@ body {
   border: 1px solid #000;
 }
 
+#character {
+  width: 400px;
+  margin: 10px;
+}
+
 #realmItems {
   width: 500px;
   margin: 10px;
@@ -137,3 +142,46 @@ body {
   padding-right: 15px;
   background: url("/img/copper.gif") right center no-repeat;
 }
+
+.cls-3d { background-color: #666;border-style: solid; border-color: #444 #333 #333 #444; border-width: 1px 1px 1px 1px; color: #fff;padding: 0 0.5em 0 0.5em; text-align: center; }
+
+.cls-warrior { background-color: #c79c6e }
+.cls-3d-warrior { background-color: #ac875f;border-style: solid; border-color: #c79c6e #927250 #927250 #c79c6e; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-warrior { background-color: #ac875f;border-style: solid; border-color: #c79c6e #927250 #927250 #c79c6e; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-warrior { background-color: #ac875f;border-style: solid; border-color: #c79c6e #927250 #927250 #c79c6e; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-hunter { background-color: #abd473 }
+.cls-3d-hunter { background-color: #94b763;border-style: solid; border-color: #abd473 #7d9b54 #7d9b54 #abd473; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-hunter { background-color: #94b763;border-style: solid; border-color: #abd473 #7d9b54 #7d9b54 #abd473; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-hunter { background-color: #94b763;border-style: solid; border-color: #abd473 #7d9b54 #7d9b54 #abd473; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-rogue { background-color: #fff569 }
+.cls-3d-rogue { background-color: #ddd45b;border-style: solid; border-color: #fff569 #bbb44d #bbb44d #fff569; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-rogue { background-color: #ddd45b;border-style: solid; border-color: #fff569 #bbb44d #bbb44d #fff569; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-rogue { background-color: #ddd45b;border-style: solid; border-color: #fff569 #bbb44d #bbb44d #fff569; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-mage { background-color: #69ccf0 }
+.cls-3d-mage { background-color: #5bb1d0;border-style: solid; border-color: #69ccf0 #4d96b0 #4d96b0 #69ccf0; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-mage { background-color: #5bb1d0;border-style: solid; border-color: #69ccf0 #4d96b0 #4d96b0 #69ccf0; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-mage { background-color: #5bb1d0;border-style: solid; border-color: #69ccf0 #4d96b0 #4d96b0 #69ccf0; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-druid { background-color: #ff7d0a }
+.cls-3d-druid { background-color: #dd6c09;border-style: solid; border-color: #ff7d0a #bb5c07 #bb5c07 #ff7d0a; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-druid { background-color: #dd6c09;border-style: solid; border-color: #ff7d0a #bb5c07 #bb5c07 #ff7d0a; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-druid { background-color: #dd6c09;border-style: solid; border-color: #ff7d0a #bb5c07 #bb5c07 #ff7d0a; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-deathknight { background-color: #c41f3b }
+.cls-3d-deathknight { background-color: #A82B44;border-style: solid; border-color: #c41f3b #8C2B3E #8C2B3E #c41f3b; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-deathknight { background-color: #A82B44;border-style: solid; border-color: #c41f3b #8C2B3E #8C2B3E #c41f3b; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-deathknight { background-color: #A82B44;border-style: solid; border-color: #c41f3b #8C2B3E #8C2B3E #c41f3b; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-priest { background-color: #ffffff }
+.cls-3d-priest { background-color: #dddddd;border-style: solid; border-color: #ffffff #bbbbbb #bbbbbb #ffffff; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-priest { background-color: #dddddd;border-style: solid; border-color: #ffffff #bbbbbb #bbbbbb #ffffff; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-priest { background-color: #dddddd;border-style: solid; border-color: #ffffff #bbbbbb #bbbbbb #ffffff; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-warlock { background-color: #9482c9 }
+.cls-3d-warlock { background-color: #8071af;border-style: solid; border-color: #9482c9 #6c5f94 #6c5f94 #9482c9; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-warlock { background-color: #8071af;border-style: solid; border-color: #9482c9 #6c5f94 #6c5f94 #9482c9; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-warlock { background-color: #8071af;border-style: solid; border-color: #9482c9 #6c5f94 #6c5f94 #9482c9; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-paladin { background-color: #f58cba }
+.cls-3d-paladin { background-color: #d47aa1;border-style: solid; border-color: #f58cba #b46789 #b46789 #f58cba; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-paladin { background-color: #d47aa1;border-style: solid; border-color: #f58cba #b46789 #b46789 #f58cba; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-paladin { background-color: #d47aa1;border-style: solid; border-color: #f58cba #b46789 #b46789 #f58cba; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
+.cls-shaman { background-color: #2459ff }
+.cls-3d-shaman { background-color: #1f4ddd;border-style: solid; border-color: #2459ff #1a41bb #1a41bb #2459ff; border-width: 1px 1px 1px 1px; color: black;padding: 0 0.5em 0 0.5em; text-align: right; }
+.cls-3d-left-shaman { background-color: #1f4ddd;border-style: solid; border-color: #2459ff #1a41bb #1a41bb #2459ff; border-width: 1px 0px 1px 1px; color: black;padding: 0 0.25em 0 0.5em; text-align: right; }
+.cls-3d-right-shaman { background-color: #1f4ddd;border-style: solid; border-color: #2459ff #1a41bb #1a41bb #2459ff; border-width: 1px 1px 1px 0px; color: black;padding: 0 0.5em 0 0.25em; text-align: right; }
