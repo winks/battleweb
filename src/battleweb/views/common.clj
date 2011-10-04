@@ -17,6 +17,10 @@
                [:div#wrapper
                 content]]))
 
+(defpartial has-error
+  [_ & x]
+  [:div#error "Error"])
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defpartial realm-item-full

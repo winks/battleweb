@@ -4,11 +4,19 @@
         hiccup.core
         hiccup.page-helpers))
 
-(defpartial slugify-icon
+(defn bwlog
+  [level & msgparts]
+   (println (str "bw: [" level "]") (apply str msgparts)))
+
+(defn bwinfo
+  [msg & parts]
+  (bwlog "info" msg (apply str parts)))
+
+(defn slugify-icon
   [name]
   (string/capitalize (string/lower-case (string/replace name " " ""))))
 
-(defpartial slugify-realm
+(defn slugify-realm
   [name]
   (->
     name
@@ -56,7 +64,7 @@
 
 (defpartial link-guild
   [region realm name text]
-  (link-to (str "/guild/" region "/" (slugify-realm realm) "/" name) text))
+  (link-to (str "/guild/" region "/" (slugify-realm realm) "/" (string/replace name " " "%20")) text))
 
 (defpartial link-char
   [region realm name text]
@@ -69,7 +77,14 @@
 (defpartial link-guild-a
   [region realm name text]
   (link-to
-       (str "http://" region ".battle.net/wow/guild/" (slugify-realm realm) "/" name "/")
+       (str
+         "http://"
+         region
+         ".battle.net/wow/guild/"
+         (slugify-realm realm)
+         "/"
+         (string/replace name " " "%20")
+         "/")
        text))
 
 (defpartial link-char-a
@@ -89,3 +104,13 @@
   (link-to
        (str "http://www.wowhead.com/item=" id)
        text))
+
+(defpartial valid-char?
+  [input region fnyes fnno]
+  (if-let [name (:name input)]
+    (do
+;      (bwlog "debug" "valid:" name)
+      (fnyes region input))
+    (do
+      (bwlog "debug" "invalid:" input)
+      (fnno region input))))

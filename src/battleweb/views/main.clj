@@ -54,18 +54,17 @@
       region
       (character/get-character-db region (slugify-realm realm) name))))
 
-(defpage "/list/:name" {:keys [listname]}
+(defpage "/list/:listname" {:keys [listname]}
   (bw-page "Lists!" (common/char-table (character/get-character-list listname))))
 
-;(defpage "/sql/chars/create" {}
-;  (storage/chars-table-create))
-
-;(defpage "/sql/chars/insert" {}
-;  (storage/chars-table-insert))
+(defpage "/lists/:listname" {:keys [listname]}
+  (bw-page "Lists!" (common/char-table (character/get-character-list-db listname))))
 
 (defpage "/load/:region/:realm/:name" {:keys [region realm name]}
-  (bw-page
-    "Load"
-    (common/character-detail
-      region
-      (storage/chars-table-select region realm name))))
+  (let [input (storage/chars-table-select region realm name)]
+    (bw-page
+      "Load"
+      (valid-char? input region common/character-detail common/has-error)))) 
+
+(defpage "/sql/create/listsdb" {}
+  (storage/lists-table-create))
