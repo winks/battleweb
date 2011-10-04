@@ -2,7 +2,7 @@
   (:require [clojure.string :as string]
             [clojure.java.jdbc :as sql])
   (:use [clojure.data.json :only (json-str write-json read-json)])
-  (:use battleweb.views.helper))
+  (:use battleweb.helper))
 
 (let [db-protocol "file"
         db-host "/d:/battleweb"
@@ -105,7 +105,7 @@
     (do
       (read-json result))
     (do
-      (println "bw: [warn] chars-table-select failed")
+      (bwlog "warn" "chars-table-select failed")
       (identity nil))))
 
 ;;;;;;;;;;;;;
@@ -125,7 +125,7 @@
     (sql/with-query-results
       rs
       ["SELECT * FROM bwlists WHERE id = ?" listid]
-      (read-json (declob (:content (first rs)))))
+      (declob (:content (first rs))))
     (catch Exception e
       (do
         (bwlog "debug" (.printStackTrace e))
@@ -143,7 +143,12 @@
 
 (defn lists-table-select
   [listid]
-  (sql/with-connection
-    db
-    (sql/transaction
-      (sql-lists-select listid))))
+  (if-let [result (sql/with-connection
+                    db
+                      (sql/transaction
+                        (sql-lists-select listid)))]
+    (do
+      (read-json result))
+    (do
+      (bwlog "warn" "lists-table-select failed")
+      (identity nil))))

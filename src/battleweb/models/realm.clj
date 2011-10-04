@@ -1,6 +1,7 @@
 (ns battleweb.models.realm
   (:require [battlenet.core :as bnc]
-            [battlenet.network :as bnn]))
+            [battlenet.network :as bnn])
+  (:use battleweb.helper))
 
 (defn get-realm
   ([region]

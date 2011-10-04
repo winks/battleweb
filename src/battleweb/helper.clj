@@ -1,4 +1,4 @@
-(ns battleweb.views.helper
+(ns battleweb.helper
   (:require [clojure.string :as string])
   (:use noir.core
         hiccup.core
@@ -7,10 +7,6 @@
 (defn bwlog
   [level & msgparts]
    (println (str "bw: [" level "]") (apply str msgparts)))
-
-(defn bwinfo
-  [msg & parts]
-  (bwlog "info" msg (apply str parts)))
 
 (defn slugify-icon
   [name]

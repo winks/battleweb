@@ -4,7 +4,7 @@
             [battlenet.network :as bnn]
             [battlenet.tools :as bnt]
             [battleweb.models.storage :as storage])
-  (:use battleweb.views.helper))
+  (:use battleweb.helper))
 
 (defn get-character
   "Grab a character."

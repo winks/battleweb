@@ -1,6 +1,7 @@
 (ns battleweb.models.guild
   (:require [battlenet.core :as bnc]
-            [battlenet.network :as bnn]))
+            [battlenet.network :as bnn])
+  (:use battleweb.helper))
 
 (defn get-guild
   [region realm name]

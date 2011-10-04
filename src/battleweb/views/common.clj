@@ -5,7 +5,7 @@
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
-        battleweb.views.helper))
+        battleweb.helper))
 
 (defpartial layout [& content]
             (html5

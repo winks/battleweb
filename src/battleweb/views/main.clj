@@ -8,7 +8,7 @@
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
-        battleweb.views.helper))
+        battleweb.helper))
 
 (defpartial bw-page
   [headline content]
@@ -66,5 +66,5 @@
       "Load"
       (valid-char? input region common/character-detail common/has-error)))) 
 
-(defpage "/sql/create/listsdb" {}
-  (storage/lists-table-create))
+;(defpage "/sql/create/listsdb" {}
+;  (storage/lists-table-create))
