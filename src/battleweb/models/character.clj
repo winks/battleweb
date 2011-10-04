@@ -18,4 +18,4 @@
 ;               ["us" "ysondre" "kripparron"]
                ]]
     (for [citem clist]
-      (get-character (nth citem 0) (nth citem 1) (nth citem 2)))))
+      [(nth citem 0) (get-character (nth citem 0) (nth citem 1) (nth citem 2))])))

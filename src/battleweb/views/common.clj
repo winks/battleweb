@@ -4,7 +4,8 @@
             [battlenet.tools :as bnt])
   (:use noir.core
         hiccup.core
-        hiccup.page-helpers))
+        hiccup.page-helpers
+        battleweb.views.helpers))
 
 (defpartial layout [& content]
             (html5
@@ -15,56 +16,6 @@
               [:body
                [:div#wrapper
                 content]]))
-
-(defpartial slugify-icon
-  [name]
-  (string/capitalize (string/lower-case (string/replace name " " ""))))
-
-(defpartial iconize-prof
-  [prof]
-  [:span
-  [:img
-   {:src
-    (->
-      "/img/ico/profession/{prof}.png"
-      (string/replace "{prof}" (slugify-icon prof))),
-    :width 20,
-    :height 20,
-    :alt prof,
-    :title prof}]])
-
-(defpartial iconize-class
-  [class]
-  [:img
-   {:src
-    (->
-      "/img/ico/class/{class}.jpg"
-      (string/replace "{class}" (slugify-icon class))),
-    :width 20,
-    :height 20,
-    :alt class,
-    :title class}])
-
-(defpartial iconize-race
-  [race gender]
-  [:img
-   {:src
-    (->
-      "/img/ico/race/IconLarge_{race}_{gender}.png"
-      (string/replace "{race}" (slugify-icon race))
-      (string/replace "{gender}" "Male"))
-    :width 20,
-    :height 20,
-    :alt (str race " " gender),
-    :title (str race " " gender)}])
-
-(defpartial link-guild
-  [region realm name text]
-  (link-to (str "/guild/" region "/" realm "/" name) text))
-
-(defpartial link-char
-  [region realm name text]
-  (link-to (str "/character/" region "/" realm "/" name) text))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -94,9 +45,7 @@
      name " (" (.toUpperCase region) "-" realm ")"]
     [:span.points achievementPoints " Achievement Points"]
     [:div.item-footer
-     (link-to
-       (str "http://" region ".battle.net/wow/guild/" realm "/" name "/")
-       "Armory")]]])
+     (link-guild-a region realm name "[A]")]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -146,8 +95,8 @@
     (item-stats-extended bonusStats)
     [:li "Sell Price: " (bnt/copper-to-gold sellPrice)]
     [:li.item-footer
-     (link-to (str "http://" region ".battle.net/wow/en/item/" id) "Armory") " "
-     (link-to (str "http://www.wowhead.com/item=" id) "Wowhead")]]])
+     (link-item-a region id "Armory") " "
+     (link-item-wh id "Wowhead")]]])
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -165,7 +114,9 @@
                 guild
                 titles
                 professions]} character
-        primary (bnt/get-primary-professions professions)]
+        primary (bnt/get-primary-professions professions)
+        primary-a (first primary)
+        primary-b (nth primary 1)]
     [:div#character
      [:div.icon (image (bnt/media-url-avatar region thumbnail))]
      [:ul.inner
@@ -179,20 +130,25 @@
        "&gt;"]
       [:li level " " (get bnd/bn-races race) " " (get bnd/bn-classes class)]
       [:li (-> (string/upper-case region)) "-" realm ", " achievementPoints " Points"]
-      (if (not (string/blank? (first primary))) [:li (first primary)])
-      (if (not (string/blank? (nth primary 1))) [:li (nth primary 1)])
+      (if (not (string/blank? (first primary-a)))
+        [:li (first primary-a) " " (nth primary-a 1)])
+      (if (not (string/blank? (first primary-b)))
+        [:li (first primary-b) " " (nth primary-b 1)])
       ]]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defpartial char-td
   [char-class char-content]
-  [:td {:class (str "cls-3d-" (string/lower-case (slugify-icon (get bnd/bn-classes char-class))))}
+  [:td
+   {:class (str "cls-3d-" (string/lower-case (slugify-icon (get bnd/bn-classes char-class))))}
    char-content])
 
 (defpartial char-tr
-  [region character]
-  (let [{:keys [name
+  [input]
+  (let [region (first input)
+        character (nth input 1)
+        {:keys [name
                 realm
                 level
                 gender
@@ -207,39 +163,37 @@
         primary (bnt/get-primary-professions professions)
         primary-a (first primary)
         primary-b (nth primary 1)
-        title (bnt/get-title character)
-        linked-name (link-char region realm name name)]
+        title (bnt/get-title character)]
     [:tr
      (char-td class (str
-                      (iconize-race (get bnd/bn-races race) gender)
+                      (iconify-race (get bnd/bn-races race) gender)
                       ""
-                      (iconize-class (get bnd/bn-classes class))))
+                      (iconify-class (get bnd/bn-classes class))))
      (char-td class (string/replace title "%s" (link-char region realm name name)))
      (char-td class level)
-     (char-td class (str "&lt;" (link-guild region realm (:name guild) (:name guild)) "&gt;"))
+     (char-td class (str "&lt;" (link-guild region (slugify-realm realm) (:name guild) (:name guild)) "&gt;"))
      (char-td class (if (string/blank? (first primary-a))
                       ""
-                      (str (iconize-prof (first primary-a)) " " (nth primary-a 1))))
+                      (str (iconify-prof (first primary-a)) " " (nth primary-a 1))))
      (char-td class (if (string/blank? (first primary-b))
                       ""
-                      (str (iconize-prof (first primary-b)) " " (nth primary-b 1))))
+                      (str (iconify-prof (first primary-b)) " " (nth primary-b 1))))
      (char-td class (bnt/get-secondary-profession professions "Cooking"))
      (char-td class (bnt/get-secondary-profession professions "First Aid"))
      (char-td class (bnt/get-secondary-profession professions "Fishing"))
      (char-td class achievementPoints)
-     ]))
+     (char-td class (link-char-a region realm name "[A]"))]))
 
 (defpartial char-table
-  [region characters]
+  [characters]
   [:table#char-table
    [:thead
     [:th.cls-3d {:colspan 3} "Character"]
     [:th.cls-3d {:colspan 1} "Guild"]
     [:th.cls-3d {:colspan 2} "Professions"]
-    [:th.cls-3d {:colspan 1} (iconize-prof "Cooking")]
-    [:th.cls-3d {:colspan 1} (iconize-prof "First Aid")]
-    [:th.cls-3d {:colspan 1} (iconize-prof "Fishing")]
-    [:th.cls-3d {:colspan 1} "AchP"]]
-   (let [num (count characters)
-         regions (take num (cycle [region]))]
-     (map char-tr regions characters))])
+    [:th.cls-3d {:colspan 1} (iconify-prof "Cooking")]
+    [:th.cls-3d {:colspan 1} (iconify-prof "First Aid")]
+    [:th.cls-3d {:colspan 1} (iconify-prof "Fishing")]
+    [:th.cls-3d {:colspan 1} "AchP"]
+    [:th.cls-3d {:colspan 1} "Links"]]
+   (map char-tr characters)])

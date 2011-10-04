@@ -6,7 +6,8 @@
             [battleweb.models.realm :as realm])
   (:use noir.core
         hiccup.core
-        hiccup.page-helpers))
+        hiccup.page-helpers
+        battleweb.views.helpers))
 
 (defpartial bw-page
   [headline content]
@@ -30,7 +31,8 @@
        " - Item info for 'Wrap of the Great Turtle'"]
       [:li
        (link-to "/character/us/ysondre/kripparrian" "/character/us/ysondre/kripparrian")
-       " - Character info for Kripparrian on US-Ysondre"]]]))
+       " - Character info for Kripparrian on US-Ysondre"]
+      ]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
   (bw-page "Realms!" (common/realms-list-full region (realm/get-realm region name))))
@@ -49,7 +51,7 @@
     "Characters!"
     (common/character-detail
       region
-      (character/get-character region realm name))))
+      (character/get-character region (slugify-realm realm) name))))
 
 (defpage "/list/:name" {:keys [listname]}
-  (bw-page "Lists!" (common/char-table "eu" (character/get-character-list listname))))
+  (bw-page "Lists!" (common/char-table (character/get-character-list listname))))
