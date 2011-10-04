@@ -1,5 +1,5 @@
 (ns battleweb.views.helper
-    (:require [clojure.string :as string])
+  (:require [clojure.string :as string])
   (:use noir.core
         hiccup.core
         hiccup.page-helpers))
@@ -48,7 +48,7 @@
     (->
       "/img/ico/race/IconLarge_{race}_{gender}.png"
       (string/replace "{race}" (slugify-icon race))
-      (string/replace "{gender}" (get bnd/bn-gender gender)))
+      (string/replace "{gender}" gender))
     :width 20,
     :height 20,
     :alt (str race " " gender),

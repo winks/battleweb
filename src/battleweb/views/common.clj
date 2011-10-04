@@ -5,7 +5,7 @@
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
-        battleweb.views.helpers))
+        battleweb.views.helper))
 
 (defpartial layout [& content]
             (html5
@@ -166,7 +166,7 @@
         title (bnt/get-title character)]
     [:tr
      (char-td class (str
-                      (iconify-race (get bnd/bn-races race) gender)
+                      (iconify-race (get bnd/bn-races race) (get bnd/bn-gender gender))
                       ""
                       (iconify-class (get bnd/bn-classes class))))
      (char-td class (string/replace title "%s" (link-char region realm name name)))

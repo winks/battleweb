@@ -3,11 +3,12 @@
             [battleweb.models.character :as character]
             [battleweb.models.guild :as guild]
             [battleweb.models.item :as item]
-            [battleweb.models.realm :as realm])
+            [battleweb.models.realm :as realm]
+            [battleweb.models.storage :as storage])
   (:use noir.core
         hiccup.core
         hiccup.page-helpers
-        battleweb.views.helpers))
+        battleweb.views.helper))
 
 (defpartial bw-page
   [headline content]
@@ -51,7 +52,20 @@
     "Characters!"
     (common/character-detail
       region
-      (character/get-character region (slugify-realm realm) name))))
+      (character/get-character-db region (slugify-realm realm) name))))
 
 (defpage "/list/:name" {:keys [listname]}
   (bw-page "Lists!" (common/char-table (character/get-character-list listname))))
+
+;(defpage "/sql/chars/create" {}
+;  (storage/chars-table-create))
+
+;(defpage "/sql/chars/insert" {}
+;  (storage/chars-table-insert))
+
+(defpage "/load/:region/:realm/:name" {:keys [region realm name]}
+  (bw-page
+    "Load"
+    (common/character-detail
+      region
+      (storage/chars-table-select region realm name))))

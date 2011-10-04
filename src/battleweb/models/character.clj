@@ -1,7 +1,9 @@
 (ns battleweb.models.character
-  (:require [battlenet.core :as bnc]
+  (:require [clojure.java.jdbc :as sql]
+            [battlenet.core :as bnc]
             [battlenet.network :as bnn]
-            [battlenet.tools :as bnt]))
+            [battlenet.tools :as bnt]
+            [battleweb.models.storage :as storage]))
 
 (defn get-character
   [region realm name]
@@ -11,6 +13,14 @@
     name
     (bnt/join-params ["fields" "guild" "titles" "professions"])))
 
+(defn get-character-db
+  [region realm name]
+  (do
+    (let [chr (get-character region realm name)]
+      (storage/chars-table-update region realm name chr)
+      (identity chr))))
+    
+
 (defn get-character-list
   [name]
   (let [clist [["us" "ysondre" "kripparrian"]
@@ -19,3 +29,4 @@
                ]]
     (for [citem clist]
       [(nth citem 0) (get-character (nth citem 0) (nth citem 1) (nth citem 2))])))
+
