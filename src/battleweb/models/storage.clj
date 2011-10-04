@@ -52,8 +52,13 @@
 
 (defn- sql-chars-select
   [id]
-  (sql/with-query-results rs ["SELECT * FROM bwchars WHERE id = ?" id]
-                          (read-json (declob (:content (first rs))))))
+  (try
+    (sql/with-query-results
+      rs
+      ["SELECT * FROM bwchars WHERE id = ?" id]
+      (read-json (declob (:content (first rs)))))
+    (catch Exception _
+      nil)))
 
 (defn chars-table-create
   []

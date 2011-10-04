@@ -15,10 +15,15 @@
 
 (defn get-character-db
   [region realm name]
-  (do
-    (let [chr (get-character region realm name)]
-      (storage/chars-table-update region realm name chr)
-      (identity chr))))
+  (if-let [chr (storage/chars-table-select region realm name)]
+    (do
+      (println "from db")
+      (identity chr))
+    (do
+      (println "from network")
+      (let [chr (get-character region realm name)]
+        (storage/chars-table-update region realm name chr)
+        (identity chr)))))
     
 
 (defn get-character-list
