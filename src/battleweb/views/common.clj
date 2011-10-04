@@ -180,7 +180,7 @@
 
 (defpartial char-table
   [region characters]
-  [:table
+  [:table#char-table
    [:thead
     [:th.cls-3d {:colspan 3} "Character"]
     [:th.cls-3d {:colspan 1} "Guild"]

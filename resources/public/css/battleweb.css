@@ -47,6 +47,15 @@ body {
   font-size: small;
 }
 
+#char-table a {
+ color: #333333;
+ text-decoration: none;
+}
+#char-table a:hover {
+ color: #333333;
+ text-decoration: underline;
+}
+
 .legendary { color: #ff8000; }
 .epic { color: #a335ee; }
 .rare { color: #0070ff; }
