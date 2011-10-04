@@ -16,17 +16,38 @@
                [:div#wrapper
                 content]]))
 
+(defpartial slugify-icon
+  [name]
+  (string/capitalize (string/lower-case (string/replace name " " ""))))
+
 (defpartial iconize-prof
   [prof]
-  (let [parts (string/split prof #" ")]
-    [:span
-    [:img
-     {:src
-      (->
-        "/img/ico/profession/%s.png"
-        (string/replace "%s" (first parts))),
-      :width 20,
-      :height 20}] " " (nth parts 1)]))
+  [:span
+  [:img
+   {:src
+    (->
+      "/img/ico/profession/%s.png"
+      (string/replace "%s" (slugify-icon prof))),
+    :width 20,
+    :height 20}]])
+
+(defpartial iconize-class
+  [class]
+  [:img
+   {:src
+    (->
+      "/img/ico/class/%s.jpg"
+      (string/replace "%s" (slugify-icon class))),
+    :width 20,
+    :height 20}])
+
+(defpartial link-guild
+  [region realm name text]
+  (link-to (str "/guild/" region "/" realm "/" name) text))
+
+(defpartial link-char
+  [region realm name text]
+  (link-to (str "/character/" region "/" realm "/" name) text))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -164,14 +185,20 @@
                 guild
                 titles
                 professions]} character
-        primary (bnt/get-primary-professions professions)]
+        primary (bnt/get-primary-professions professions)
+        primary-a (first primary)
+        primary-b (nth primary 1)]
     [:tr
-     (char-td class (str (get bnd/bn-races race) " " (get bnd/bn-classes class)))
-     (char-td class name)
+     (char-td class (str (get bnd/bn-races race) " " (iconize-class (get bnd/bn-classes class))))
+     (char-td class (link-char region realm name name))
      (char-td class level)
-     (char-td class (link-to (str "/guild/" region "/" realm "/" (:name guild)) (:name guild)))
-     (char-td class (if (not (string/blank? (first primary))) (iconize-prof (first primary)) ""))
-     (char-td class (if (not (string/blank? (nth primary 1))) (iconize-prof (nth primary 1)) ""))
+     (char-td class (link-guild region realm (:name guild) (:name guild)))
+     (char-td class (if (string/blank? (first primary-a))
+                      ""
+                      (str (iconize-prof (first primary-a)) " " (nth primary-a 1))))
+     (char-td class (if (string/blank? (first primary-b))
+                      ""
+                      (str (iconize-prof (first primary-b)) " " (nth primary-b 1))))
      (char-td class (bnt/get-secondary-profession professions "Cooking"))
      (char-td class (bnt/get-secondary-profession professions "First Aid"))
      (char-td class (bnt/get-secondary-profession professions "Fishing"))
@@ -185,9 +212,9 @@
     [:th.cls-3d {:colspan 3} "Character"]
     [:th.cls-3d {:colspan 1} "Guild"]
     [:th.cls-3d {:colspan 2} "Professions"]
-    [:th.cls-3d {:colspan 1} "Coo"]
-    [:th.cls-3d {:colspan 1} "Fir"]
-    [:th.cls-3d {:colspan 1} "Fis"]
+    [:th.cls-3d {:colspan 1} (iconize-prof "Cooking")]
+    [:th.cls-3d {:colspan 1} (iconize-prof "First_Aid")]
+    [:th.cls-3d {:colspan 1} (iconize-prof "Fishing")]
     [:th.cls-3d {:colspan 1} "AchP"]]
    (let [num (count characters)
          regions (take num (cycle [region]))]
