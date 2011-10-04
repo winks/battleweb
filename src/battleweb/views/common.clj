@@ -26,20 +26,37 @@
   [:img
    {:src
     (->
-      "/img/ico/profession/%s.png"
-      (string/replace "%s" (slugify-icon prof))),
+      "/img/ico/profession/{prof}.png"
+      (string/replace "{prof}" (slugify-icon prof))),
     :width 20,
-    :height 20}]])
+    :height 20,
+    :alt prof,
+    :title prof}]])
 
 (defpartial iconize-class
   [class]
   [:img
    {:src
     (->
-      "/img/ico/class/%s.jpg"
-      (string/replace "%s" (slugify-icon class))),
+      "/img/ico/class/{class}.jpg"
+      (string/replace "{class}" (slugify-icon class))),
     :width 20,
-    :height 20}])
+    :height 20,
+    :alt class,
+    :title class}])
+
+(defpartial iconize-race
+  [race gender]
+  [:img
+   {:src
+    (->
+      "/img/ico/race/IconLarge_{race}_{gender}.png"
+      (string/replace "{race}" (slugify-icon race))
+      (string/replace "{gender}" "Male"))
+    :width 20,
+    :height 20,
+    :alt (str race " " gender),
+    :title (str race " " gender)}])
 
 (defpartial link-guild
   [region realm name text]
@@ -134,7 +151,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defpartial character-info
+(defpartial character-detail
   [region character]
   (let [{:keys [name
                 realm
@@ -166,9 +183,11 @@
       (if (not (string/blank? (nth primary 1))) [:li (nth primary 1)])
       ]]))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defpartial char-td
   [char-class char-content]
-  [:td {:class (str "cls-3d-" (string/lower-case (get bnd/bn-classes char-class)))}
+  [:td {:class (str "cls-3d-" (string/lower-case (slugify-icon (get bnd/bn-classes char-class))))}
    char-content])
 
 (defpartial char-tr
@@ -187,12 +206,17 @@
                 professions]} character
         primary (bnt/get-primary-professions professions)
         primary-a (first primary)
-        primary-b (nth primary 1)]
+        primary-b (nth primary 1)
+        title (bnt/get-title character)
+        linked-name (link-char region realm name name)]
     [:tr
-     (char-td class (str (get bnd/bn-races race) " " (iconize-class (get bnd/bn-classes class))))
-     (char-td class (link-char region realm name name))
+     (char-td class (str
+                      (iconize-race (get bnd/bn-races race) gender)
+                      ""
+                      (iconize-class (get bnd/bn-classes class))))
+     (char-td class (string/replace title "%s" (link-char region realm name name)))
      (char-td class level)
-     (char-td class (link-guild region realm (:name guild) (:name guild)))
+     (char-td class (str "&lt;" (link-guild region realm (:name guild) (:name guild)) "&gt;"))
      (char-td class (if (string/blank? (first primary-a))
                       ""
                       (str (iconize-prof (first primary-a)) " " (nth primary-a 1))))
@@ -213,7 +237,7 @@
     [:th.cls-3d {:colspan 1} "Guild"]
     [:th.cls-3d {:colspan 2} "Professions"]
     [:th.cls-3d {:colspan 1} (iconize-prof "Cooking")]
-    [:th.cls-3d {:colspan 1} (iconize-prof "First_Aid")]
+    [:th.cls-3d {:colspan 1} (iconize-prof "First Aid")]
     [:th.cls-3d {:colspan 1} (iconize-prof "Fishing")]
     [:th.cls-3d {:colspan 1} "AchP"]]
    (let [num (count characters)

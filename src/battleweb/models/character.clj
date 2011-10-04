@@ -13,6 +13,9 @@
 
 (defn get-character-list
   [name]
-  (let [clist [["eu" "aggramar" "tharabas"] ["eu" "aggramar" "armagon"]]]
+  (let [clist [["us" "ysondre" "kripparrian"]
+;               ["us" "ysondre" "kripp"]
+;               ["us" "ysondre" "kripparron"]
+               ]]
     (for [citem clist]
       (get-character (nth citem 0) (nth citem 1) (nth citem 2)))))

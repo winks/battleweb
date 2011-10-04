@@ -47,7 +47,7 @@
 (defpage "/character/:region/:realm/:name" {:keys [region realm name]}
   (bw-page
     "Characters!"
-    (common/character-info
+    (common/character-detail
       region
       (character/get-character region realm name))))
 
