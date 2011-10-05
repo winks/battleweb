@@ -70,7 +70,7 @@
     [:img
      {:src
        (->
-        "/img/ico/spell/{name}.png"
+        "/img/ico/spell/large/{name}.png"
         (string/replace "{name}" name)),
       :width 20,
       :height 20}] [:span ]))
