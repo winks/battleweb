@@ -161,12 +161,12 @@
                 thumbnail
                 lastModified
                 guild
-                titles
                 professions]} character
         primary (bnt/get-primary-professions professions)
         primary-a (first primary)
         primary-b (nth primary 1)
-        title (bnt/get-title character)]
+        title (bnt/get-title character)
+        talents (:talents character)]
     [:tr
      (char-td class (str
                       (iconify-race (bnt/lookup-race race) (bnt/lookup-gender gender))
@@ -174,6 +174,14 @@
                       (iconify-class (bnt/lookup-class class))))
      (char-td class (string/replace title "%s" (link-char region realm name name)))
      (char-td class level)
+     (char-td class (str
+                      (iconify-spell (nth (first (bnt/get-talent-spec talents)) 2))
+                      " "
+                      (iconify-spell (nth (nth (bnt/get-talent-spec talents) 1) 2))))
+     (char-td class (str
+                      (nth (first (bnt/get-talent-spec talents)) 1)
+                      " "
+                      (nth (nth (bnt/get-talent-spec talents) 1) 1)))
      (char-td class (str "&lt;" (link-guild region (slugify-realm realm) (:name guild) (:name guild)) "&gt;"))
      (char-td class (if (string/blank? (first primary-a))
                       ""
@@ -193,6 +201,7 @@
   [:table#char-table
    [:thead
     [:th.cls-3d {:colspan 3} "Character"]
+    [:th.cls-3d {:colspan 2} "Spec"]
     [:th.cls-3d {:colspan 1} "Guild"]
     [:th.cls-3d {:colspan 2} "Professions"]
     [:th.cls-3d {:colspan 1} (iconify-prof "Cooking")]

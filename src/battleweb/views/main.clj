@@ -67,7 +67,11 @@
   (let [input (storage/chars-table-select region realm name)]
     (bw-page
       "Load"
-      (valid-char? input region common/character-detail common/has-error)))) 
+      (valid-char? input region common/character-detail common/has-error))))
+
+(defpage "/update/:region/:realm/:name" {:keys [region realm name]}
+  (let [chr (character/get-character region realm name)]
+    (storage/chars-table-update region realm name chr)))
 
 ;(defpage "/sql/create/listsdb" {}
 ;  (storage/lists-table-create))

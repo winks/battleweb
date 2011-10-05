@@ -58,15 +58,28 @@
     (->
       "/img/ico/race/IconLarge_{race}_{gender}.png"
       (string/replace "{race}" (slugify-icon race))
-      (string/replace "{gender}" gender))
+      (string/replace "{gender}" gender)),
     :width 20,
     :height 20,
     :alt (str race " " gender),
     :title (str race " " gender)}])
 
+(defpartial iconify-spell
+  [name]
+  (if-let [nname name]
+    [:img
+     {:src
+       (->
+        "/img/ico/spell/{name}.png"
+        (string/replace "{name}" name)),
+      :width 20,
+      :height 20}] [:span ]))
+
 (defpartial link-guild
   [region realm name text]
-  (link-to (str "/guild/" region "/" (slugify-realm realm) "/" (string/replace name " " "%20")) text))
+  (if-let [gname name]
+    (link-to (str "/guild/" region "/" (slugify-realm realm) "/" (string/replace name " " "%20")) text)
+    ""))
 
 (defpartial link-char
   [region realm name text]
@@ -84,7 +97,7 @@
       (string/replace "{region}" region)
       (string/replace "{realm}" (slugify-realm realm))
       (string/replace "{name}" name)
-      (string/replace " " "_"))
+      (string/replace " " "%20"))
     text))
 
 (defpartial link-char-a

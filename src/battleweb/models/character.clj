@@ -13,7 +13,7 @@
     region
     realm
     name
-    (bnt/join-params ["fields" "guild" "titles" "professions"])))
+    (bnt/join-params ["fields" "guild" "titles" "professions" "talents"])))
 
 (defn get-character-db
   "Grab a character - DB version."
