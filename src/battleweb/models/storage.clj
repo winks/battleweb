@@ -55,7 +55,9 @@
     (sql/with-query-results
       rs
       ["SELECT * FROM bwchars WHERE id = ?" id]
-      (declob (:content (first rs))))
+      (if (= true bw-db-clob)
+        (declob (:content (first rs)))
+        (:content (first rs))))
     (catch Exception e
       (do
         (println (.printStackTrace e))
@@ -117,7 +119,9 @@
     (sql/with-query-results
       rs
       ["SELECT * FROM bwlists WHERE id = ?" listid]
-      (declob (:content (first rs))))
+      (if (= true bw-db-clob)
+        (declob (:content (first rs)))
+        (:content (first rs))))
     (catch Exception e
       (do
         (bwlog "debug" (.printStackTrace e))

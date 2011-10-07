@@ -3,8 +3,11 @@
 (let [db-protocol "file"
         db-host "/d:/battleweb"
         db-name "battleweb"]
-    (def bw-db {:classname "org.h2.Driver",
+    (def bw-h2-db {:classname "org.h2.Driver",
                 :subprotocol "h2"
                 :subname (str db-protocol "://" db-host "/" db-name),
                 :user "sa",
                 :password ""}))
+
+(def bw-db-clob true)
+(def bw-db bw-h2-db)

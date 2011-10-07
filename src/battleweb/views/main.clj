@@ -57,9 +57,6 @@
       region
       (character/get-character-db region (slugify-realm realm) name))))
 
-(defpage "/list/:listname" {:keys [listname]}
-  (bw-page "Lists!" (common/char-table (character/get-character-list listname))))
-
 (defpage "/lists/:listname" {:keys [listname]}
   (bw-page "Lists!" (common/char-table (character/get-character-list-db listname))))
 

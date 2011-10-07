@@ -184,7 +184,11 @@
                       (nth (first (bnt/get-talent-spec talents)) 1)
                       " "
                       (nth (nth (bnt/get-talent-spec talents) 1) 1)))
-     (char-td class (str "&lt;" (link-guild region (slugify-realm realm) (:name guild) (:name guild)) "&gt;"))
+     (char-td class
+              (let [guild-link (link-guild region (slugify-realm realm) (:name guild) (:name guild))]
+                (if (string/blank? guild-link)
+                  ""
+                  (str "&lt;" guild-link "&gt;"))))
      (char-td class (if (string/blank? (first primary-a))
                       ""
                       (str (iconify-prof (first primary-a)) " " (nth primary-a 1))))
