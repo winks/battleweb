@@ -1,5 +1,7 @@
 (ns battleweb.settings)
 
+(def bw-port "8080")
+
 (let [db-protocol "file"
         db-host "/d:/battleweb"
         db-name "battleweb"]
