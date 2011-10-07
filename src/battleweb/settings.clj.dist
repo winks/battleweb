@@ -9,5 +9,21 @@
                 :user "sa",
                 :password ""}))
 
+; see storage/declob - it's needed for h2db and maybe some others
 (def bw-db-clob true)
+; set the db-params
 (def bw-db bw-h2-db)
+
+(let [db-host "localhost"
+      db-port "3306"
+      db-name "battleweb"]
+    (def bw-mysql-db {:classname "com.mysql.jdbc.Driver"
+                :subprotocol "mysql"
+                :subname (str "//" db-host ":" db-port "/" db-name)
+                :user "battleweb"
+                :password "battleweb"}))
+
+; no declob needed for mysql
+(def bw-db-clob false)
+; set the db-params
+(def bw-db bw-mysql-db)
