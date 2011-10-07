@@ -75,3 +75,6 @@
 
 ;(defpage "/sql/create/listsdb" {}
 ;  (storage/lists-table-create))
+
+;(defpage "/sql/create/charsdb" {}
+;  (storage/chars-table-create))

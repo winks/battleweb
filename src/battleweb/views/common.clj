@@ -123,13 +123,13 @@
     [:div#character
      [:div.icon (image (bnt/media-url-avatar region thumbnail))]
      [:ul.inner
-      [:li {:class (str "class-" (-> (string/lower-case (bnt/lookup-class class))))}
+      [:li {:class (str "class-" (string/lower-case (bnt/lookup-class class)))}
        (->
          (bnt/get-title character)
          (string/replace "%s" name))
        " "
        "&lt;"
-       (link-to (str "/guild/" region "/" realm "/" (:name guild)) (:name guild))
+       (link-guild region realm (:name guild) (:name guild))
        "&gt;"]
       [:li level " " (bnt/lookup-race race) " " (bnt/lookup-class class)]
       [:li (-> (string/upper-case region)) "-" realm ", " achievementPoints " Points"]
@@ -167,7 +167,9 @@
         primary-b (nth primary 1)
         title (bnt/get-title character)
         talents (:talents character)]
-    [:tr
+    (if (string/blank? name)
+      (identity "")
+     [:tr
      (char-td class (str
                       (iconify-race (bnt/lookup-race race) (bnt/lookup-gender gender))
                       ""
@@ -193,7 +195,7 @@
      (char-td class (bnt/get-secondary-profession professions "First Aid"))
      (char-td class (bnt/get-secondary-profession professions "Fishing"))
      (char-td class achievementPoints)
-     (char-td class (link-char-a region realm name "[A]"))]))
+     (char-td class (link-char-a region realm name "[A]"))])))
 
 (defpartial char-table
   [characters]

@@ -2,16 +2,8 @@
   (:require [clojure.string :as string]
             [clojure.java.jdbc :as sql])
   (:use [clojure.data.json :only (json-str write-json read-json)]
-        battleweb.helper))
-
-(let [db-protocol "file"
-        db-host "/d:/battleweb"
-        db-name "battleweb"]
-    (def db {:classname "org.h2.Driver",
-             :subprotocol "h2"
-             :subname (str db-protocol "://" db-host "/" db-name),
-             :user "sa",
-             :password ""}))
+        battleweb.helper
+        battleweb.settings))
 
 (defn create-uuid
   "Create a unique key of <region>_<realm>_<name>"
@@ -76,21 +68,21 @@
 (defn chars-table-create
   []
   (sql/with-connection
-    db
+    bw-db
     (sql/transaction
       (sql-chars-create))))
 
 (defn chars-table-insert
   []
   (sql/with-connection
-    db
+    bw-db
     (sql/transaction
       (sql-chars-insert))))
 
 (defn chars-table-update
   [region realm name text]
   (sql/with-connection
-    db
+    bw-db
     (sql/transaction
       (sql-chars-update
         (create-uuid region realm name)
@@ -99,7 +91,7 @@
 (defn chars-table-select
   [region realm name]
   (if-let [result (sql/with-connection
-                    db
+                    bw-db
                     (sql/transaction
                       (sql-chars-select (create-uuid region realm name))))]
     (do
@@ -137,14 +129,14 @@
 (defn lists-table-create
   []
   (sql/with-connection
-    db
+    bw-db
     (sql/transaction
       (sql-lists-create))))
 
 (defn lists-table-select
   [listid]
   (if-let [result (sql/with-connection
-                    db
+                    bw-db
                       (sql/transaction
                         (sql-lists-select listid)))]
     (do
