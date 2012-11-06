@@ -6,6 +6,10 @@
         hiccup.page-helpers
         battleweb.helper))
 
+(defpartial bw-footer [& content]
+  [:hr]
+  (link-to "/" "Home"))
+
 (defpartial layout [& content]
             (html5
               [:head
@@ -14,7 +18,10 @@
                (include-css "/css/battleweb.css")]
               [:body
                [:div#wrapper
-                content]]))
+                content]
+               [:div#footer
+                (bw-footer)]]))
+
 
 (defpartial has-error
   [_ & x]

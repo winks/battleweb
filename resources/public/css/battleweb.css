@@ -9,6 +9,10 @@ body {
   margin: 10px;
 }
 
+#footer {
+  text-align: center;
+}
+
 #item {
   background-color: #333333;
   color: #dddddd;
