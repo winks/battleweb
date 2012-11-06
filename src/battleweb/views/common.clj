@@ -128,7 +128,7 @@
         primary-a (first primary)
         primary-b (nth primary 1)]
     [:div#character
-     [:div.icon (image (bnt/media-url-avatar region thumbnail))]
+     [:div.icon (image (bnt/media-url-avatar (str region) thumbnail))]
      [:ul.inner
       [:li {:class (str "class-" (string/lower-case (bnt/lookup-class class)))}
        (->

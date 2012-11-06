@@ -1,7 +1,7 @@
 (ns battleweb.models.storage
   (:require [clojure.string :as string]
             [clojure.java.jdbc :as sql])
-  (:use [clojure.data.json :only (json-str write-json read-json)]
+  (:use [clojure.data.json :only (read-str)]
         battleweb.helper
         battleweb.settings
         battleweb.db))
@@ -89,7 +89,7 @@
     (sql/transaction
       (sql-chars-update
         (create-uuid region realm name)
-        (json-str text)))))
+        (read-str text :key-fn keyword)))))
 
 (defn chars-table-select
   [region realm name]
@@ -98,7 +98,7 @@
                     (sql/transaction
                       (sql-chars-select (create-uuid region realm name))))]
     (do
-      (read-json result))
+      (read-str result :key-fn keyword))
     (do
       (bwlog "warn" "chars-table-select failed")
       (identity nil))))
@@ -145,7 +145,7 @@
                       (sql/transaction
                         (sql-lists-select listid)))]
     (do
-      (read-json result))
+      (read-str result :key-fn keyword))
     (do
       (bwlog "warn" "lists-table-select failed")
       (identity nil))))
