@@ -31,7 +31,7 @@
 (defn get-character-list
   "Grab a list."
   ([name]
-    (let [clist [["us" "ysondre" "kripparrian"]]]
+    (let [clist [["eu" "kazzak" "znufflessd"]]]
       (for [citem clist]
         [(nth citem 0) (get-character (nth citem 0) (nth citem 1) (nth citem 2))])))
   ([name clist]

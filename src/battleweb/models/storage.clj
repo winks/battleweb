@@ -39,7 +39,7 @@
   (sql/insert-values
     :bwchars
     [:id :content :updated]
-    ["us_ysondre_kripparrian" "foo" "2011-10-04"]))
+    ["eu_kazzak_znufflessd" "foo" "2011-10-04"]))
 
 (defn- sql-chars-update
   [id text]

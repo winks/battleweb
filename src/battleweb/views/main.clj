@@ -21,18 +21,18 @@
     [:h1 "Welcome to " (link-to "https://github.com/winks/battleweb" "battleweb")]
     [:div "Some example pages, feel free to play around with urls:"
      [:ul
-      [:li (link-to "/realm/eu/malygos" "/realm/eu/malygos") " - Realm info for EU-Malygos"]
+      [:li (link-to "/realm/eu/kazzak" "/realm/eu/kazzak") " - Realm info for EU-Kazzak"]
       [:li (link-to "/realm/eu" "/realm/eu") " - All EU realms"]
       [:li (link-to "/realm/us" "/realm/us") " - All US realms"]
       [:li
-       (link-to "/guild/us/ysondre/exodus" "/guild/us/ysondre/exodus") 
-       " - Guild info for Exodus on US-Ysondre"]
+       (link-to "/guild/eu/kazzak/pendulum" "/guild/eu/kazzak/pendulum")
+       " - Guild info for Pendulum on EU-Kazzak"]
       [:li
        (link-to "/item/62383" "/item/62383")
        " - Item info for 'Wrap of the Great Turtle'"]
       [:li
-       (link-to "/character/us/ysondre/kripparrian" "/character/us/ysondre/kripparrian")
-       " - Character info for Kripparrian on US-Ysondre"]
+       (link-to "/character/eu/kazzak/znufflessd" "/character/eu/kazzak/znufflessd")
+       " - Character info for Znufflessd on EU-Kazzak"]
       ]]))
 
 (defpage "/realm/:region/:name" {:keys [region name]}
