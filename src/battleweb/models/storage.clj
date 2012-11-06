@@ -3,7 +3,8 @@
             [clojure.java.jdbc :as sql])
   (:use [clojure.data.json :only (json-str write-json read-json)]
         battleweb.helper
-        battleweb.settings))
+        battleweb.settings
+        battleweb.db))
 
 (defn create-uuid
   "Create a unique key of <region>_<realm>_<name>"

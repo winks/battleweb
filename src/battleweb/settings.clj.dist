@@ -1,31 +1,24 @@
 (ns battleweb.settings)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; general section
+;;;
+
 (def bw-port "8080")
 
-(let [db-protocol "file"
-        db-host "/d:/battleweb"
-        db-name "battleweb"]
-    (def bw-h2-db {:classname "org.h2.Driver",
-                :subprotocol "h2"
-                :subname (str db-protocol "://" db-host "/" db-name),
-                :user "sa",
-                :password ""}))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Database stuff
+;;;
 
-; see storage/declob - it's needed for h2db and maybe some others
-(def bw-db-clob true)
-; set the db-params
-(def bw-db bw-h2-db)
+(def bw-db-engine   "postgresql")
+(def bw-db-host     "localhost")
+(def bw-db-port     "5432")
+(def bw-db-name     "battleweb")
+(def bw-db-user     "battleweb")
+(def bw-db-password "battleweb")
 
-(let [db-host "localhost"
-      db-port "3306"
-      db-name "battleweb"]
-    (def bw-mysql-db {:classname "com.mysql.jdbc.Driver"
-                :subprotocol "mysql"
-                :subname (str "//" db-host ":" db-port "/" db-name)
-                :user "battleweb"
-                :password "battleweb"}))
+; engine = postgresql | mysql     | h2
+; port   = 5432       | 3306      | -
+; host   = localhost  | localhost | /d:/battleweb
+; user   = battlweb   | battleweb | sa
 
-; no declob needed for mysql
-(def bw-db-clob false)
-; set the db-params
-(def bw-db bw-mysql-db)
