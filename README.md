@@ -9,11 +9,14 @@ Various tools acting as a frontend to the [Blizzard Community API](http://us.bat
 ```bash
 cp src/battleweb/settings.clj.dist src/battleweb/settings.clj
 vi src/battleweb/settings.clj
-mysql dbname < resources/misc/schema.sql
+# mysql dbname < resources/misc/mysql-schema.sql
+# psql # do whatever necessary to import resources/misc/postgresql-schema.sql
 lein deps
 lein run
 ```
 
 ## Dependencies
 
-MySQL (preferred) or h2db.
+ * PostgreSQL (default)
+ * MySQL (equally supported)
+ * h2db (discouraged)
